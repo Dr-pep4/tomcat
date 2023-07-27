@@ -1,19 +1,13 @@
-FROM ubuntu:20.04
-LABEL maintainer="Simple Nginx-Tomcat WAS Service"
-RUN apt-get update
-RUN apt-get install -y openjdk-8-jdk
-RUN apt-get install -y wget
-RUN wget tzdata
-RUN wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.75/bin/apache-tomcat-9.0.75.tar.gz -O /tmp/tomcat.tar.gz
-RUN cd /tmp
-RUN tar xvfz tomcat.tar.gz
+FROM ubuntu:latest
+
+RUN apt-get -y update && apt-get -y upgrade
+RUN apt-get -y install openjdk-8-jdk wget
 RUN mkdir /usr/local/tomcat
-RUN mv /tmp/apache-tomcat-9.0.75/'*' /usr/local/tomcat/
-RUN rm -rf /tmp/apache* /tmp/tomcat.tar.gz
-COPY index.jsp /usr/local/tomcat/webapps/ROOT/
-COPY context.xml /usr/local/tomcat/conf/
-COPY mysql-connector-j-8.0.32.jar /usr/local/tomcat/lib/
-RUN cd /usr/local/tomcat/bin
-RUN ./startup.sh
-ENV TZ=Asia/Seoul
+RUN wget http://apache.tt.co.kr/tomcat/tomcat-9/v9.0.14/bin/apache-tomcat-9.0.14.tar.gz -O /tmp/tomcat.tar.gz
+RUN cd /tmp && tar xvfz tomcat.tar.gz
+RUN cp -Rv /tmp/apache-tomcat-9.0.14/* /usr/local/tomcat/
+RUN rm -rf /tmp/* && rm -rf /usr/local/tomcat/webapps/*
+
 EXPOSE 8080
+
+CMD ["/usr/local/tomcat/bin/catalina.sh", "run"]
