@@ -5,6 +5,7 @@ FROM ubuntu:latest
 ENV TOMCAT_VERSION=8.5.91 \
     CATALINA_HOME=/opt/tomcat
 
+
 # wget과 Java를 설치합니다
 RUN apt-get update && \
     apt-get install -y wget openjdk-11-jre-headless && \
@@ -15,6 +16,7 @@ RUN mkdir -p ${CATALINA_HOME} && \
     wget -O /tmp/apache-tomcat.tar.gz https://dlcdn.apache.org/tomcat/tomcat-8/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz && \
     tar -xzvf /tmp/apache-tomcat.tar.gz -C ${CATALINA_HOME} --strip-components=1 && \
     rm /tmp/apache-tomcat.tar.gz
+COPY server.xml /opt/tomcat/conf/
 
 # 기본 Tomcat 포트를 노출합니다
 EXPOSE 8080
