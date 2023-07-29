@@ -12,10 +12,10 @@ RUN apt-get update && \
 
 # Download and install Tomcat
 RUN mkdir -p ${CATALINA_HOME} && \
-    curl -SL "https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz" | tar -xzC ${CATALINA_HOME} --strip-components=1
+    curl -SL "https://downloads.apache.org/tomcat/tomcat-${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz" | tar -xzC ${CATALINA_HOME} --strip-components=1
 
 # Expose the default Tomcat port
-EXPOSE 8081
+EXPOSE 8080
 
 # Set the working directory to Tomcat's bin directory
 WORKDIR ${CATALINA_HOME}/bin
