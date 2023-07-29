@@ -1,5 +1,5 @@
 # 공식 Ubuntu 기본 이미지를 사용합니다
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 # 환경 변수를 설정합니다
 ENV TOMCAT_VERSION=8.5.91 \
