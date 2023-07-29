@@ -15,7 +15,7 @@ RUN mkdir -p ${CATALINA_HOME} && \
     curl -SL "https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz" | tar -xzC ${CATALINA_HOME} --strip-components=1
 
 # Expose the default Tomcat port
-EXPOSE 8080
+EXPOSE 8081
 
 # Set the working directory to Tomcat's bin directory
 WORKDIR ${CATALINA_HOME}/bin
