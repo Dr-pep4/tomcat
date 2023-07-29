@@ -1,10 +1,24 @@
+# Use the official Ubuntu base image
 FROM ubuntu:20.04
-LABEL maintainer="Simple Nginx-Tomcat WAS Service"
-RUN apt-get update && apt-get install -y openjdk-8-jdk wget
-RUN wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.75/bin/apache-tomcat-9.0.75.tar.gz -O /tmp/tomcat.tar.gz
-RUN tar xvfz /tmp/tomcat.tar.gz
-RUN mkdir /usr/local/tomcat
-RUN mv /tmp/apache-tomcat-9.0.75/* /usr/local/tomcat/
-RUN rm -rf /tmp/apache* /tmp/tomcat.tar.gz
-RUN cd /usr/local/tomcat/bin
+
+# Set environment variables
+ENV TOMCAT_VERSION=10.0.12 \
+    CATALINA_HOME=/opt/tomcat
+
+# Install Java and other dependencies
+RUN apt-get update && \
+    apt-get install -y openjdk-11-jre-headless curl && \
+    rm -rf /var/lib/apt/lists/*
+
+# Download and install Tomcat
+RUN mkdir -p ${CATALINA_HOME} && \
+    curl -SL "https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz" | tar -xzC ${CATALINA_HOME} --strip-components=1
+
+# Expose the default Tomcat port
 EXPOSE 8080
+
+# Set the working directory to Tomcat's bin directory
+WORKDIR ${CATALINA_HOME}/bin
+
+# Start Tomcat
+CMD ["./catalina.sh", "run"]
