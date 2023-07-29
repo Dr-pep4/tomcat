@@ -19,7 +19,7 @@ RUN mkdir -p ${CATALINA_HOME} && \
 COPY server.xml /opt/tomcat/conf/
 
 # 기본 Tomcat 포트를 노출합니다
-EXPOSE 8080
+EXPOSE 8081
 
 # 작업 디렉토리를 Tomcat의 bin 디렉토리로 설정합니다
 WORKDIR ${CATALINA_HOME}/bin
