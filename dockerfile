@@ -2,7 +2,7 @@
 FROM ubuntu:20.04
 
 # Set environment variables
-ENV TOMCAT_VERSION=10.0.12 \
+ENV TOMCAT_VERSION=8.5.91 \
     CATALINA_HOME=/opt/tomcat
 
 # Install Java and other dependencies
@@ -12,8 +12,9 @@ RUN apt-get update && \
 
 # Download and install Tomcat
 RUN mkdir -p ${CATALINA_HOME} && \
-    curl -SL "https://downloads.apache.org/tomcat/tomcat-${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz" | tar -xzC ${CATALINA_HOME} --strip-components=1
-
+    
+    wget https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.91/bin/apache-tomcat-8.5.91.tar.gz | tar -xvfz ${CATALINA_HOME} --strip-components=1
+    
 # Expose the default Tomcat port
 EXPOSE 8080
 
